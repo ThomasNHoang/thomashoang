@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { DialogProps } from "@radix-ui/react-dialog";
 import { useEffect, useState, useCallback } from "react";
-import { RxSun, RxMoon, RxLaptop, RxFile } from "react-icons/rx";
+import { RxSun, RxMoon, RxLaptop, RxFile, RxMagnifyingGlass } from "react-icons/rx";
 import { CommandDialog, CommandList, CommandInput, CommandEmpty, CommandGroup, CommandItem } from "@/components/ui/command";
 
 export function CommandMenu(props: DialogProps) {
@@ -50,6 +50,7 @@ export function CommandMenu(props: DialogProps) {
         onClick={() => setOpen(true)}
         {...props}
       >
+        <RxMagnifyingGlass className="mr-2 h-5 w-5" />
         <span className="hidden lg:inline-flex">Search website...</span>
         <span className="inline-flex lg:hidden">Search...</span>
         <kbd className="pointer-events-none absolute right-[0.3rem] top-[0.3rem] hidden h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium opacity-100 sm:flex">

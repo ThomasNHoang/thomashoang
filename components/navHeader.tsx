@@ -1,5 +1,9 @@
+import Link from "next/link";
+import { cn } from "@/lib/utils";
+import { VscGithubInverted } from "react-icons/vsc";
 import { MainNavigation } from "@/components/mainNav";
 import { CommandMenu } from "@/components/commandMenu";
+import { buttonVariants } from "@/components/ui/button";
 import { MobileNavigation } from "@/components/mobileNav";
 import { ThemeSwitcher } from "@/components/themeSwitcher";
 
@@ -13,7 +17,24 @@ export function NavigationHeader() {
           <div className="w-full flex-1 md:w-auto md:flex-none">
             <CommandMenu />
           </div>
-          <nav>
+          <nav className="flex items-center">
+            <Link
+              href="https://github.com/ThomasNHoang/thomasnhoang.github.io"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <div
+                className={cn(
+                  buttonVariants({
+                    variant: "ghost",
+                  }),
+                  "h-8 w-8 px-0"
+                )}
+              >
+                <VscGithubInverted className="h-5 w-5" />
+                <span className="sr-only">GitHub</span>
+              </div>
+            </Link>
             <ThemeSwitcher />
           </nav>
         </div>
