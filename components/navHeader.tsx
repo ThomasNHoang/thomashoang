@@ -1,5 +1,6 @@
-import { MainNavigation } from "@/components/mainNav"
-import { MobileNavigation } from "@/components/mobileNav"
+import { MainNavigation } from "@/components/mainNav";
+import { CommandMenu } from "@/components/commandMenu";
+import { MobileNavigation } from "@/components/mobileNav";
 
 export function NavigationHeader() {
   return (
@@ -7,6 +8,11 @@ export function NavigationHeader() {
       <div className="container flex h-14 max-w-screen-2xl items-center">
         <MainNavigation />
         <MobileNavigation />
+        <div className="flex flex-1 items-center justify-between space-x-2 md:justify-end">
+          <div className="w-full flex-1 md:w-auto md:flex-none">
+            <CommandMenu />
+          </div>
+        </div>
       </div>
     </header>
   )
