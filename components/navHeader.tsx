@@ -1,6 +1,7 @@
 import { MainNavigation } from "@/components/mainNav";
 import { CommandMenu } from "@/components/commandMenu";
 import { MobileNavigation } from "@/components/mobileNav";
+import { ThemeSwitcher } from "@/components/themeSwitcher";
 
 export function NavigationHeader() {
   return (
@@ -12,6 +13,9 @@ export function NavigationHeader() {
           <div className="w-full flex-1 md:w-auto md:flex-none">
             <CommandMenu />
           </div>
+          <nav>
+            <ThemeSwitcher />
+          </nav>
         </div>
       </div>
     </header>

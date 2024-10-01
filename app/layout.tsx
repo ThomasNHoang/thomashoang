@@ -2,6 +2,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { NavigationHeader } from "@/components/navHeader";
+import { ThemeProvider } from "@/components/themeProvider";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -29,10 +30,17 @@ export default function RootLayout({
       <body
         className={`mx-8 ${geistSans.variable} ${geistMono.variable} min-h-screen bg-background antialiased`}
       >
-        <div className="relative flex min-h-screen flex-col bg-background">
-          <NavigationHeader />
-          {children}
-        </div>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <div className="relative flex min-h-screen flex-col bg-background">
+            <NavigationHeader />
+            {children}
+          </div>
+        </ThemeProvider>
       </body>
     </html>
   );

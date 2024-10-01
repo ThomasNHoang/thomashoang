@@ -1,16 +1,18 @@
 "use client";
 
 import { cn } from "@/lib/utils";
+import { useTheme } from "next-themes";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { DialogProps } from "@radix-ui/react-dialog";
-import { CommandDialog, CommandList, CommandInput, CommandEmpty, CommandGroup, CommandItem } from "@/components/ui/command";
 import { useEffect, useState, useCallback } from "react";
+import { SunIcon, MoonIcon, LaptopIcon } from "@radix-ui/react-icons";
+import { CommandDialog, CommandList, CommandInput, CommandEmpty, CommandGroup, CommandItem } from "@/components/ui/command";
 
 export function CommandMenu(props: DialogProps) {
   const router = useRouter();
+  const { setTheme } = useTheme();
   const [open, setOpen] = useState(false);
-  // Todo: Add theme
 
   useEffect(() => {
     const down = (e: KeyboardEvent) => {
@@ -92,6 +94,20 @@ export function CommandMenu(props: DialogProps) {
               }}
             >
               Placeholder
+            </CommandItem>
+          </CommandGroup>
+          <CommandGroup heading="Theme">
+            <CommandItem onSelect={() => runCommand(() => setTheme("light"))}>
+              <SunIcon className="mr-2 h-4 w-4" />
+              Light
+            </CommandItem>
+            <CommandItem onSelect={() => runCommand(() => setTheme("dark"))}>
+              <MoonIcon className="mr-2 h-4 w-4" />
+              Dark
+            </CommandItem>
+            <CommandItem onSelect={() => runCommand(() => setTheme("system"))}>
+              <LaptopIcon className="mr-2 h-4 w-4" />
+              System
             </CommandItem>
           </CommandGroup>
         </CommandList>
