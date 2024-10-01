@@ -1,7 +1,8 @@
 "use client";
 
-import { cn } from "@/lib/utils";
 import Link from "next/link";
+import { cn } from "@/lib/utils";
+import { RxGlobe } from "react-icons/rx";
 import { usePathname } from "next/navigation";
 
 export function MainNavigation() {
@@ -10,7 +11,7 @@ export function MainNavigation() {
   return (
     <div className="mr-4 hidden md:flex">
       <Link href="/" className="mr-4 flex items-center space-x-2 lg:mr-6">
-        <span className="h-6 w-6">🌐</span>
+        <RxGlobe className="h-6 w-6" />
         <span className="hidden font-bold lg:inline-block">
           Thomas Hoang
         </span>

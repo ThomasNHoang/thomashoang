@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { DialogProps } from "@radix-ui/react-dialog";
 import { useEffect, useState, useCallback } from "react";
-import { SunIcon, MoonIcon, LaptopIcon } from "@radix-ui/react-icons";
+import { RxSun, RxMoon, RxLaptop, RxFile } from "react-icons/rx";
 import { CommandDialog, CommandList, CommandInput, CommandEmpty, CommandGroup, CommandItem } from "@/components/ui/command";
 
 export function CommandMenu(props: DialogProps) {
@@ -68,7 +68,7 @@ export function CommandMenu(props: DialogProps) {
                 runCommand(() => router.push("/"))
               }}
             >
-              {/* Todo: Add Icon */}
+              <RxFile className="mr-2 h-4 w-4" />
               Placeholder
             </CommandItem>
             <CommandItem
@@ -77,6 +77,7 @@ export function CommandMenu(props: DialogProps) {
                 runCommand(() => router.push("/"))
               }}
             >
+              <RxFile className="mr-2 h-4 w-4" />
               Placeholder
             </CommandItem>
             <CommandItem
@@ -85,6 +86,7 @@ export function CommandMenu(props: DialogProps) {
                 runCommand(() => router.push("/"))
               }}
             >
+              <RxFile className="mr-2 h-4 w-4" />
               Placeholder
             </CommandItem>
             <CommandItem
@@ -93,20 +95,21 @@ export function CommandMenu(props: DialogProps) {
                 runCommand(() => router.push("/"))
               }}
             >
+              <RxFile className="mr-2 h-4 w-4" />
               Placeholder
             </CommandItem>
           </CommandGroup>
           <CommandGroup heading="Theme">
             <CommandItem onSelect={() => runCommand(() => setTheme("light"))}>
-              <SunIcon className="mr-2 h-4 w-4" />
+              <RxSun className="mr-2 h-4 w-4" />
               Light
             </CommandItem>
             <CommandItem onSelect={() => runCommand(() => setTheme("dark"))}>
-              <MoonIcon className="mr-2 h-4 w-4" />
+              <RxMoon className="mr-2 h-4 w-4" />
               Dark
             </CommandItem>
             <CommandItem onSelect={() => runCommand(() => setTheme("system"))}>
-              <LaptopIcon className="mr-2 h-4 w-4" />
+              <RxLaptop className="mr-2 h-4 w-4" />
               System
             </CommandItem>
           </CommandGroup>
