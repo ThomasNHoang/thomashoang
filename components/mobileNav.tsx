@@ -34,41 +34,28 @@ export function MobileNavigation() {
         <ScrollArea className="my-4 h-[calc(100vh-8rem)] pb-10 pl-6">
           {/* Todo: Add Navlinks Dynamically */}
           <div className="flex flex-col space-y-3">
-            <MobileLink
-              href="/"
-              onOpenChange={setOpen}
-            >
+            <MobileLink href="/" onOpenChange={setOpen}>
               Placeholder
             </MobileLink>
-            <MobileLink
-              href="/"
-              onOpenChange={setOpen}
-            >
+            <MobileLink href="/" onOpenChange={setOpen}>
               Placeholder
             </MobileLink>
-            <MobileLink
-              href="/"
-              onOpenChange={setOpen}
-            >
+            <MobileLink href="/" onOpenChange={setOpen}>
               Placeholder
             </MobileLink>
-            <MobileLink
-              href="/"
-              onOpenChange={setOpen}
-            >
+            <MobileLink href="/" onOpenChange={setOpen}>
               Placeholder
             </MobileLink>
           </div>
         </ScrollArea>
-
       </SheetContent>
     </Sheet>
-  )
+  );
 }
 interface MobileLinkProps extends LinkProps {
-  onOpenChange?: (open: boolean) => void
-  children: React.ReactNode
-  className?: string
+  onOpenChange?: (open: boolean) => void;
+  children: React.ReactNode;
+  className?: string;
 }
 
 function MobileLink({
@@ -92,5 +79,5 @@ function MobileLink({
     >
       {children}
     </Link>
-  )
+  );
 }

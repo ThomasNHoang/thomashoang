@@ -6,8 +6,21 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { DialogProps } from "@radix-ui/react-dialog";
 import { useEffect, useState, useCallback } from "react";
-import { RxSun, RxMoon, RxLaptop, RxFile, RxMagnifyingGlass } from "react-icons/rx";
-import { CommandDialog, CommandList, CommandInput, CommandEmpty, CommandGroup, CommandItem } from "@/components/ui/command";
+import {
+  RxSun,
+  RxMoon,
+  RxLaptop,
+  RxFile,
+  RxMagnifyingGlass,
+} from "react-icons/rx";
+import {
+  CommandDialog,
+  CommandList,
+  CommandInput,
+  CommandEmpty,
+  CommandGroup,
+  CommandItem,
+} from "@/components/ui/command";
 
 export function CommandMenu(props: DialogProps) {
   const router = useRouter();
@@ -23,29 +36,29 @@ export function CommandMenu(props: DialogProps) {
           e.target instanceof HTMLTextAreaElement ||
           e.target instanceof HTMLSelectElement
         ) {
-          return
+          return;
         }
 
-        e.preventDefault()
-        setOpen((open) => !open)
+        e.preventDefault();
+        setOpen((open) => !open);
       }
-    }
+    };
 
-    document.addEventListener("keydown", down)
-    return () => document.removeEventListener("keydown", down)
-  }, [])
+    document.addEventListener("keydown", down);
+    return () => document.removeEventListener("keydown", down);
+  }, []);
 
   const runCommand = useCallback((command: () => unknown) => {
-    setOpen(false)
-    command()
-  }, [])
+    setOpen(false);
+    command();
+  }, []);
 
   return (
     <>
       <Button
         variant="outline"
         className={cn(
-          "relative h-8 w-full justify-start rounded-[0.5rem] bg-muted/50 text-sm font-normal text-muted-foreground shadow-none sm:pr-12 md:w-40 lg:w-64"
+          "relative h-8 w-full justify-start rounded-[0.5rem] bg-muted/50 text-sm font-normal text-muted-foreground shadow-none sm:pr-12 md:w-40 lg:w-64",
         )}
         onClick={() => setOpen(true)}
         {...props}
@@ -66,7 +79,7 @@ export function CommandMenu(props: DialogProps) {
             <CommandItem
               value="Placeholder"
               onSelect={() => {
-                runCommand(() => router.push("/"))
+                runCommand(() => router.push("/"));
               }}
             >
               <RxFile className="mr-2 h-4 w-4" />
@@ -75,7 +88,7 @@ export function CommandMenu(props: DialogProps) {
             <CommandItem
               value="Placeholder"
               onSelect={() => {
-                runCommand(() => router.push("/"))
+                runCommand(() => router.push("/"));
               }}
             >
               <RxFile className="mr-2 h-4 w-4" />
@@ -84,7 +97,7 @@ export function CommandMenu(props: DialogProps) {
             <CommandItem
               value="Placeholder"
               onSelect={() => {
-                runCommand(() => router.push("/"))
+                runCommand(() => router.push("/"));
               }}
             >
               <RxFile className="mr-2 h-4 w-4" />
@@ -93,7 +106,7 @@ export function CommandMenu(props: DialogProps) {
             <CommandItem
               value="Placeholder"
               onSelect={() => {
-                runCommand(() => router.push("/"))
+                runCommand(() => router.push("/"));
               }}
             >
               <RxFile className="mr-2 h-4 w-4" />
@@ -117,5 +130,5 @@ export function CommandMenu(props: DialogProps) {
         </CommandList>
       </CommandDialog>
     </>
-  )
+  );
 }

@@ -12,9 +12,7 @@ export function MainNavigation() {
     <div className="mr-4 hidden md:flex">
       <Link href="/" className="mr-4 flex items-center space-x-2 lg:mr-6">
         <RxGlobe className="h-6 w-6" />
-        <span className="hidden font-bold lg:inline-block">
-          Thomas Hoang
-        </span>
+        <span className="hidden font-bold lg:inline-block">Thomas Hoang</span>
       </Link>
       <nav className="flex items-center gap-4 text-sm lg:gap-6">
         {/* Todo: Add Navlinks Dynamically */}
@@ -22,7 +20,7 @@ export function MainNavigation() {
           href="/"
           className={cn(
             "transition-colors hover:text-foreground/80",
-            pathname === "/" ? "text-foreground" : "text-foreground/60"
+            pathname === "/" ? "text-foreground" : "text-foreground/60",
           )}
         >
           Placeholder
@@ -31,7 +29,7 @@ export function MainNavigation() {
           href="/"
           className={cn(
             "transition-colors hover:text-foreground/80",
-            pathname === "/" ? "text-foreground" : "text-foreground/60"
+            pathname === "/" ? "text-foreground" : "text-foreground/60",
           )}
         >
           Placeholder
@@ -40,7 +38,7 @@ export function MainNavigation() {
           href="/"
           className={cn(
             "transition-colors hover:text-foreground/80",
-            pathname === "/" ? "text-foreground" : "text-foreground/60"
+            pathname === "/" ? "text-foreground" : "text-foreground/60",
           )}
         >
           Placeholder
@@ -49,12 +47,12 @@ export function MainNavigation() {
           href="/"
           className={cn(
             "transition-colors hover:text-foreground/80",
-            pathname.startsWith('/') ? "text-foreground" : "text-foreground/60"
+            pathname.startsWith("/") ? "text-foreground" : "text-foreground/60",
           )}
         >
           Placeholder
         </Link>
       </nav>
     </div>
-  )
+  );
 }

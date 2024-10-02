@@ -28,7 +28,7 @@ export function NavigationHeader() {
                   buttonVariants({
                     variant: "ghost",
                   }),
-                  "h-8 w-8 px-0"
+                  "h-8 w-8 px-0",
                 )}
               >
                 <VscGithubInverted className="h-5 w-5" />
@@ -40,5 +40,5 @@ export function NavigationHeader() {
         </div>
       </div>
     </header>
-  )
+  );
 }
