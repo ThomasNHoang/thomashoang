@@ -14,6 +14,7 @@ import { Button } from "@/components/ui/button";
 import { Social } from "@/components/auth/social";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginFormSchema, loginSchemaType } from "@/schema";
+import { emailLogin } from "@/lib/actions/auth/login";
 
 export function LoginForm() {
   const form = useForm<loginSchemaType>({
@@ -23,8 +24,13 @@ export function LoginForm() {
     },
   })
 
-  function onSubmit(values: loginSchemaType) {
-    console.log(values);
+  async function onSubmit(values: loginSchemaType) {
+    // Todo: Check if exists
+    try {
+      await emailLogin(values.email);
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   return (
