@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { VscGithubInverted } from "react-icons/vsc";
+import { UserButton } from "@/components/userButton";
 import { MainNavigation } from "@/components/mainNav";
 import { CommandMenu } from "@/components/commandMenu";
 import { buttonVariants } from "@/components/ui/button";
@@ -36,6 +37,7 @@ export function NavigationHeader() {
               </div>
             </Link>
             <ThemeSwitcher />
+            <UserButton />
           </nav>
         </div>
       </div>
