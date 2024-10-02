@@ -11,8 +11,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { FaUser } from "react-icons/fa";
 import { currentUser } from "@/lib/auth";
-import { SignIn } from "@/components/signin";
-import { SignOut } from "@/components/signout";
+import { Login } from "@/components/login";
+import { Logout } from "@/components/logout";
 
 export async function UserButton() {
   const user = await currentUser();
@@ -29,7 +29,7 @@ export async function UserButton() {
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         <DropdownMenuItem>
-          {user ? <SignOut /> : <SignIn />}
+          {user ? <Logout /> : <Login />}
           
         </DropdownMenuItem>
       </DropdownMenuContent>
