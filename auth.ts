@@ -1,6 +1,7 @@
 import NextAuth from "next-auth";
 import { prisma } from "@/prisma";
 import authConfig from "@/auth.config";
+import { clearStaleTokens } from "@/lib/auth";
 import Google from "next-auth/providers/google";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import Nodemailer from "next-auth/providers/nodemailer";
@@ -33,6 +34,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
+        await clearStaleTokens();
         return {
           ...token,
           id: user.id,
