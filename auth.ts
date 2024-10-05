@@ -1,6 +1,7 @@
 import NextAuth from "next-auth";
 import { prisma } from "@/prisma";
 import authConfig from "@/auth.config";
+import { getUserById } from "@/lib/user";
 import { clearStaleTokens } from "@/lib/auth";
 import Google from "next-auth/providers/google";
 import { PrismaAdapter } from "@auth/prisma-adapter";
@@ -32,26 +33,36 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     strategy: "jwt"
   },
   callbacks: {
-    async jwt({ token, user }) {
-      if (user) {
-        await clearStaleTokens();
-        return {
-          ...token,
-          id: user.id,
-        }
-      }
+    async jwt({ token }) {
+      if (!token.sub) return token;
+      clearStaleTokens();
+
+      const existingUser = await getUserById(token.sub);
+
+      if (!existingUser) return token;
+
+      token.name = existingUser.name;
+      token.email = existingUser.email;
+      // token.role = existingUser.role;
 
       return token;
     },
 
     async session({ session, token }) {
-      return {
-        ...session,
-        user: {
-          ...session.user,
-          id: token.id as string,
-        }
-      };
+      if (token.sub && session.user) {
+        session.user.id = token.sub;
+      }
+
+      // if (token.role && session.user) {
+      //   session.user.role = token.role;
+      // }
+
+      if (session.user) {
+        session.user.name = token.name;
+        session.user.email = token.email;
+      }
+
+      return session;
     }
   }
 })
