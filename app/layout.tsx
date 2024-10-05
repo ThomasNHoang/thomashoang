@@ -1,10 +1,11 @@
 import "./globals.css";
+import { auth } from "@/auth";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import { Toaster } from "@/components/ui/sonner";
 import { SessionProvider } from "next-auth/react";
 import { NavigationHeader } from "@/components/navHeader";
 import { ThemeProvider } from "@/components/themeProvider";
-import { auth } from "@/auth";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -45,6 +46,7 @@ export default async function RootLayout({
               <NavigationHeader />
               {children}
             </div>
+            <Toaster />
           </ThemeProvider>
         </body>
       </html>
