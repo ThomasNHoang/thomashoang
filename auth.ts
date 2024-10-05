@@ -18,7 +18,9 @@ const serverConfig = {
 export const { handlers, signIn, signOut, auth } = NextAuth({
   ...authConfig,
   providers: [
-    Google,
+    Google({
+      allowDangerousEmailAccountLinking: true // Only wwith magic link so safe
+    }),
     Nodemailer({
       server: serverConfig,
       from: `Email Service <${process.env.SMTP_EMAIL}>`
