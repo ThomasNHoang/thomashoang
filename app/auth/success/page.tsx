@@ -1,4 +1,4 @@
-import AuthState from "@/components/auth/authState";
+import { AuthState } from "@/components/auth/authState";
 
 export default function SuccessPage() {
   return (
