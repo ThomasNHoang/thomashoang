@@ -2,12 +2,12 @@ import NextAuth from "next-auth";
 import { prisma } from "@/prisma";
 import authConfig from "@/auth.config";
 import { getUserById } from "@/lib/user";
+import { Adapter } from 'next-auth/adapters';
 import { clearStaleTokens } from "@/lib/auth";
 import Google from "next-auth/providers/google";
 import Github from "next-auth/providers/github";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import Nodemailer from "next-auth/providers/nodemailer";
-
 const serverConfig = {
   host: "smtp.gmail.com",
   port: 465,
@@ -32,7 +32,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       from: `Email Service <${process.env.SMTP_EMAIL}>`
     })
   ],
-  adapter: PrismaAdapter(prisma),
+  adapter: PrismaAdapter(prisma) as Adapter,
   session: {
     strategy: "jwt"
   },
@@ -47,7 +47,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
       token.name = existingUser.name;
       token.email = existingUser.email;
-      // token.role = existingUser.role;
+      token.role = existingUser.role;
 
       return token;
     },
@@ -57,9 +57,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         session.user.id = token.sub;
       }
 
-      // if (token.role && session.user) {
-      //   session.user.role = token.role;
-      // }
+      if (token.role && session.user) {
+        session.user.role = token.role;
+      }
 
       if (session.user) {
         session.user.name = token.name;

@@ -21,3 +21,17 @@ export async function clearStaleTokens() {
     console.error("Error deleting expired tokens:", error)
   }
 }
+
+export async function currentRole() {
+  const session = await auth();
+
+  return session?.user?.role;
+}
+
+export function toRoleEnum() {}
+
+export enum Roles {
+  USER,
+  ADMIN,
+  OWNER,
+}

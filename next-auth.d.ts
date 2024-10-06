@@ -1,11 +1,11 @@
 import { JWT } from "@auth/core/jwt";
 import { User } from "@auth/core/types";
-// import { UserRole } from "@prisma/client";
+import { UserRole } from "@prisma/client";
 
 
 declare module "@auth/core/types" {
   interface User {
-    // role: UserRole;
+    role: UserRole;
   }
 
   interface Session {
@@ -16,7 +16,7 @@ declare module "@auth/core/types" {
 declare module "@auth/core/jwt" {
   interface JWT {
     email: string;
-    // role: UserRole;
+    role: UserRole;
   }
 }
 
