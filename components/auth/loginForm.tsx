@@ -24,6 +24,8 @@ export function LoginForm() {
     },
   })
 
+  const isSubmitting = form.formState.isSubmitting;
+
   async function onSubmit(values: loginSchemaType) {
     // Todo: Check if exists
     try {
@@ -35,7 +37,7 @@ export function LoginForm() {
 
   return (
     <div className="space-y-4">
-      <Social />
+      <Social isSubmitting={isSubmitting} />
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           <FormField
@@ -45,13 +47,19 @@ export function LoginForm() {
               <FormItem>
                 <FormLabel><span className="text-semibold">Email</span></FormLabel>
                 <FormControl>
-                  <Input placeholder="" {...field} />
+                  <Input disabled={isSubmitting} placeholder="" type="email" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
-          <Button type="submit" className="w-full">Sign In with Email</Button>
+          <Button
+            type="submit"
+            className="w-full"
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? "Logging In" : "Login with Email"}
+          </Button>
         </form>
       </Form>
     </div>

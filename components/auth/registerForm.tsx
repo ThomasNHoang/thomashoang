@@ -23,13 +23,15 @@ export function RegisterForm() {
     },
   })
 
+  const isSubmitting = form.formState.isSubmitting;
+
   function onSubmit(values: registerSchemaType) {
     console.log(values);
   }
 
   return (
     <div className="space-y-4">
-      <Social />
+      <Social isSubmitting={isSubmitting} />
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           <FormField
@@ -39,13 +41,19 @@ export function RegisterForm() {
               <FormItem>
                 <FormLabel><span className="text-semibold">Email</span></FormLabel>
                 <FormControl>
-                  <Input placeholder="" {...field} />
+                  <Input disabled={isSubmitting} placeholder="" type="email" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
-          <Button type="submit" className="w-full">Register with Email</Button>
+          <Button
+            type="submit"
+            className="w-full"
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? "Registering" : "Register with Email"}
+          </Button>
         </form>
       </Form>
     </div>
