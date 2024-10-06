@@ -9,14 +9,14 @@ export async function currentUser() {
 
 export async function clearStaleTokens() {
   try {
-    const result = await prisma.verificationToken.deleteMany({
+    await prisma.verificationToken.deleteMany({
       where: {
         expires: {
           lt: new Date()
         }
       }
     })
-    console.log(`${result.count} expired tokens deleted.`)
+    // console.log(`${result.count} expired tokens deleted.`)
   } catch (error) {
     console.error("Error deleting expired tokens:", error)
   }
