@@ -11,6 +11,8 @@ import {
 } from "@/components/ui/form";
 import { toast } from "sonner";
 import { useForm } from "react-hook-form";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
@@ -21,12 +23,25 @@ import { accountFormSchema, accountSchemaType } from "@/schema";
 import { unlinkGithubAccount, unlinkGoogleAccount } from "@/lib/actions/user/account";
 
 export function AccountForm(user: accountSchemaType) {
+  const router = useRouter();
   const { update } = useSession();
+  const [isButtonEnabled, setIsButtonEnabled] = useState(false);
 
   const form = useForm<accountSchemaType>({
     resolver: zodResolver(accountFormSchema),
     defaultValues: user,
   })
+
+  const watchFields = form.watch();
+
+  useEffect(() => {
+    const hasChanges =
+      watchFields.name !== user.name ||
+      watchFields.googleConnected !== user.googleConnected ||
+      watchFields.githubConnected !== user.githubConnected;
+
+    setIsButtonEnabled(hasChanges);
+  }, [watchFields, user]);
 
   async function onSubmit(data: accountSchemaType) {
     try {
@@ -74,6 +89,8 @@ export function AccountForm(user: accountSchemaType) {
       } else { // Wants to disconnect github
         await unlinkGithubAccount();
       }
+
+      router.refresh();
     }
 
   }
@@ -139,7 +156,7 @@ export function AccountForm(user: accountSchemaType) {
             </FormItem>
           )}
         />
-        <Button type="submit">Update account</Button>
+        <Button type="submit" disabled={!isButtonEnabled}>Update account</Button>
       </form>
     </Form>
   )
