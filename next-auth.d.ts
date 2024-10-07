@@ -4,7 +4,7 @@ import { UserRole } from "@prisma/client";
 
 
 declare module "@auth/core/types" {
-  interface User {
+  export interface User {
     role: UserRole;
   }
 
