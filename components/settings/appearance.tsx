@@ -10,9 +10,10 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { cn } from "@/lib/utils";
-import { useEffect } from "react";
 import { useTheme } from "next-themes"
 import { useForm } from "react-hook-form";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { RxChevronDown } from "react-icons/rx";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, buttonVariants } from "@/components/ui/button";
@@ -20,7 +21,9 @@ import { appearanceFormSchema, appearanceSchemaType } from "@/schema";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 export function AppearanceForm() {
+  const router = useRouter();
   const { setTheme } = useTheme();
+  const [isButtonEnabled, setIsButtonEnabled] = useState(false);
 
   const defaultValues: Partial<appearanceSchemaType> = {
     font: "inter",
@@ -34,13 +37,25 @@ export function AppearanceForm() {
   useEffect(() => {
     const savedFont = localStorage.getItem("font") as "inter" | "geist";
     if (savedFont) {
+      defaultValues.font = savedFont
       form.setValue('font', savedFont);
     }
   }, [])
 
+  const watchFields = form.watch();
+
+  useEffect(() => {
+    const hasChanges =
+      watchFields.font !== defaultValues.font ||
+      watchFields.theme !== defaultValues.theme
+
+    setIsButtonEnabled(hasChanges);
+  }, [watchFields, defaultValues]);
+
   function onSubmit(data: appearanceSchemaType) {
     setTheme(data.theme);
     localStorage.setItem("font", data.font);
+    router.refresh();
   }
 
   return (
@@ -146,7 +161,7 @@ export function AppearanceForm() {
           )}
         />
 
-        <Button type="submit">Update preferences</Button>
+        <Button type="submit" disabled={!isButtonEnabled}>Update preferences</Button>
       </form>
     </Form>
   )
