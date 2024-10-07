@@ -25,9 +25,15 @@ export const appearanceFormSchema = z.object({
 export type appearanceSchemaType = z.infer<typeof appearanceFormSchema>
 
 export const accountFormSchema = z.object({
-  name: z.string(),
+  name: z.string().min(1, "Please enter your name."),
   googleConnected: z.boolean().default(false).optional(),
   githubConnected: z.boolean().default(false).optional(),
 })
 
 export type accountSchemaType = z.infer<typeof accountFormSchema>
+
+export const onboardingFormSchema = z.object({
+  name: z.string({required_error: "Please enter your name."}),
+})
+
+export type onboardingSchemaType = z.infer<typeof onboardingFormSchema>

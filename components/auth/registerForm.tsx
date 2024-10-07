@@ -8,12 +8,14 @@ import {
   FormControl,
   FormMessage,
 } from "@/components/ui/form";
+import { toast } from "sonner";
 import { useForm } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Social } from "@/components/auth/social";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { registerFormSchema, registerSchemaType } from "@/schema";
+import { emailRegister } from "@/lib/actions/auth/register";
 
 export function RegisterForm() {
   const form = useForm<registerSchemaType>({
@@ -25,8 +27,17 @@ export function RegisterForm() {
 
   const isSubmitting = form.formState.isSubmitting;
 
-  function onSubmit(values: registerSchemaType) {
-    console.log(values);
+  async function onSubmit(values: registerSchemaType) {
+    try {
+      const result = await emailRegister(values);
+      if (result?.error) {
+        toast.error(result.error);
+      }
+
+    } catch (error) {
+      console.log(error)
+      toast.error("Something went wrong!")
+    }
   }
 
   return (
@@ -41,7 +52,7 @@ export function RegisterForm() {
               <FormItem>
                 <FormLabel><span className="text-semibold">Email</span></FormLabel>
                 <FormControl>
-                  <Input disabled={isSubmitting} placeholder="" type="email" {...field} />
+                  <Input disabled={isSubmitting} placeholder="" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>

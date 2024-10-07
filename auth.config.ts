@@ -4,7 +4,8 @@ export default {
   pages: {
     signIn: "/auth/login",
     verifyRequest: "/auth/success",
-    error: "/auth/error"
+    error: "/auth/error",
+    newUser: "/onboarding"
   },
   providers: [],
 } satisfies NextAuthConfig;

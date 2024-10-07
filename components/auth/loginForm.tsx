@@ -8,15 +8,20 @@ import {
   FormControl,
   FormMessage,
 } from "@/components/ui/form";
+import { toast } from "sonner";
 import { useForm } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Social } from "@/components/auth/social";
+import { useSearchParams } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { loginFormSchema, loginSchemaType } from "@/schema";
 import { emailLogin } from "@/lib/actions/auth/login";
+import { loginFormSchema, loginSchemaType } from "@/schema";
 
 export function LoginForm() {
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get("callbackUrl") as string | undefined;
+
   const form = useForm<loginSchemaType>({
     resolver: zodResolver(loginFormSchema),
     defaultValues: {
@@ -27,11 +32,15 @@ export function LoginForm() {
   const isSubmitting = form.formState.isSubmitting;
 
   async function onSubmit(values: loginSchemaType) {
-    // Todo: Check if exists
     try {
-      await emailLogin(values.email);
+      const result = await emailLogin(values, callbackUrl);
+      if (result?.error) {
+        toast.error(result.error);
+      }
+
     } catch (error) {
       console.log(error)
+      toast.error("Something went wrong!")
     }
   }
 
@@ -47,7 +56,7 @@ export function LoginForm() {
               <FormItem>
                 <FormLabel><span className="text-semibold">Email</span></FormLabel>
                 <FormControl>
-                  <Input disabled={isSubmitting} placeholder="" type="email" {...field} />
+                  <Input disabled={isSubmitting} placeholder="" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
