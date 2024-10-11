@@ -1,5 +1,6 @@
 import { signIn } from "next-auth/react";
 import { Button } from "@/components/ui/button";
+import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 import { FaGoogle, FaGithub } from "react-icons/fa";
 
 interface SocialProps {
@@ -9,7 +10,7 @@ interface SocialProps {
 export function Social({ isSubmitting }: SocialProps) {
   async function onClick(provider: "google" | "github") {
     signIn(provider, {
-      redirectTo: "/",
+      redirectTo: DEFAULT_LOGIN_REDIRECT,
     });
   }
 
