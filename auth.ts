@@ -38,13 +38,11 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     strategy: "jwt",
   },
   callbacks: {
-    async jwt({ token, trigger }) {
-      console.log(token, trigger);
+    async jwt({ token }) {
       if (!token.sub) return token;
       clearStaleTokens();
 
       const existingUser = await getUserById(token.sub);
-      console.log(existingUser);
 
       if (!existingUser) return token;
 
