@@ -13,9 +13,6 @@ export const registerFormSchema = z.object({
 export type registerSchemaType = z.infer<typeof registerFormSchema>;
 
 export const appearanceFormSchema = z.object({
-  theme: z.enum(["light", "dark", "system"], {
-    required_error: "Please select a theme.",
-  }),
   font: z.enum(["inter", "geist"], {
     invalid_type_error: "Select a font",
     required_error: "Please select a font.",

@@ -13,6 +13,11 @@ enum UserRole {
   USER
 }
 
+enum Font {
+  INTER
+  GEIST
+}
+
 model User {
   id            String          @id @default(cuid())
   name          String?
@@ -21,6 +26,7 @@ model User {
   image         String?
   accounts      Account[]
   role          UserRole        @default(USER)
+  userData      UserData?
  
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -53,4 +59,18 @@ model VerificationToken {
   expires    DateTime
  
   @@id([identifier, token])
+}
+
+
+model UserData {
+  id        String   @id @default(cuid())
+  userId    String   @unique
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  font      Font     @default(INTER)
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
 }

@@ -6,6 +6,7 @@ import { Adapter } from 'next-auth/adapters';
 import { clearStaleTokens } from "@/lib/auth";
 import Google from "next-auth/providers/google";
 import Github from "next-auth/providers/github";
+import { Font as FontEnum } from "@prisma/client";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import Nodemailer from "next-auth/providers/nodemailer";
 const serverConfig = {
@@ -37,6 +38,33 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     strategy: "jwt"
   },
   callbacks: {
+    async signIn({ user }) {
+      const userData = await prisma.userData.findUnique({
+        where: {
+          userId: user.id
+        }
+      })
+
+      const hasUserData = !!userData;
+      console.log(hasUserData)
+
+      if (!hasUserData) {
+        await prisma.user.update({
+          where: {
+            id: user.id
+          },
+          data: {
+            userData: {
+              create: {
+                font: FontEnum.INTER
+              }
+            }
+          }
+        })
+      }
+
+      return true;
+    },
     async jwt({ token }) {
       if (!token.sub) return token;
       clearStaleTokens();
@@ -48,20 +76,27 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       token.name = existingUser.name;
       token.email = existingUser.email;
       token.role = existingUser.role;
+      token.data = {
+        font: existingUser.userData?.font
+      }
+
 
       return token;
     },
 
     async session({ session, token }) {
-      if (token.sub && session.user) {
-        session.user.id = token.sub;
-      }
-
-      if (token.role && session.user) {
-        session.user.role = token.role;
-      }
-
       if (session.user) {
+        if (token.sub) {
+          session.user.id = token.sub;
+        }
+        if (token.role) {
+          session.user.role = token.role;
+        }
+
+        if (token.data) {
+          session.user.data = token.data;
+        }
+
         session.user.name = token.name;
         session.user.email = token.email;
       }
