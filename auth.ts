@@ -46,7 +46,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       })
 
       const hasUserData = !!userData;
-      console.log(hasUserData)
 
       if (!hasUserData) {
         await prisma.user.update({

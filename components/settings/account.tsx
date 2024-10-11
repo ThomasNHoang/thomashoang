@@ -63,7 +63,6 @@ export function AccountForm(user: accountSchemaType) {
     }
 
     if (data.googleConnected !== user.googleConnected) {
-      console.log("Changed!")
       if (data.googleConnected) { // Wants to connect google
         try {
           await signIn("google", {
@@ -78,7 +77,6 @@ export function AccountForm(user: accountSchemaType) {
     }
 
     if (data.githubConnected !== user.githubConnected) {
-      console.log("Changed!")
       if (data.githubConnected) { // Wants to connect github
         try {
           await signIn("github", {
