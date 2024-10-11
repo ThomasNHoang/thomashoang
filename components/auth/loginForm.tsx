@@ -64,7 +64,7 @@ export function LoginForm() {
             )}
           />
           <Button type="submit" className="w-full" disabled={isSubmitting}>
-            {isSubmitting ? "Logging In" : "Login with Email"}
+            {isSubmitting ? "Submitting" : "Submit"}
           </Button>
         </form>
       </Form>
