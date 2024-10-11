@@ -20,7 +20,7 @@ export default async function OnboardingPage() {
         <OnboardingForm />
       </div>
       <div className="mt-4 text-center">
-        <p className="text-md">Don't want to do this now? You can complete it later in settings.</p>
+        <p className="text-md">Don&apos;t want to do this now? You can complete it later in settings.</p>
         <Link href={DEFAULT_LOGIN_REDIRECT} className="hover:underline text-blue-500 hover:text-blue-600">
           Go to dashboard
         </Link>

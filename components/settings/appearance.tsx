@@ -41,7 +41,7 @@ export function AppearanceForm(user: appearanceSchemaType) {
     );
 
     setIsButtonEnabled(hasChanges);
-  }, [watchFields]);
+  }, [watchFields, user]);
 
   async function onSubmit(data: appearanceSchemaType) {
     try {

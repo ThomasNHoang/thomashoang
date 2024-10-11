@@ -14,7 +14,7 @@ async function getUserId() {
 }
 
 async function checkLinkedAccount(provider: string) {
-  const { userId, email, error } = await getUserId();
+  const { userId, error } = await getUserId();
   if (error) {
     throw new Error(error);
   }
@@ -27,14 +27,14 @@ async function checkLinkedAccount(provider: string) {
       }
     });
     return !!result;
-  } catch (error) {
+  } catch {
     // console.log(`${email} does not have ${provider} linked`);
     return false;
   }
 }
 
 async function unlinkAccount(provider: string) {
-  const { userId, email, error } = await getUserId();
+  const { userId, error } = await getUserId();
   if (error) {
     throw new Error(error);
   }
@@ -47,7 +47,7 @@ async function unlinkAccount(provider: string) {
       }
     });
     return !!result;
-  } catch (error) {
+  } catch {
     // console.error(`Failed to unlink ${email}'s ${provider} account`, error);
     return false;
   }
