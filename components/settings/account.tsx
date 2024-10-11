@@ -94,9 +94,8 @@ export function AccountForm(user: accountSchemaType) {
         // Wants to disconnect github
         await unlinkGithubAccount();
       }
-
-      router.refresh();
     }
+    router.refresh();
   }
 
   return (
