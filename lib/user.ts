@@ -4,7 +4,6 @@ export async function getUserByEmail(email: string) {
   try {
     const user = await prisma.user.findUnique({
       where: { email },
-      include: { userData: true },
     });
     return user;
   } catch {
@@ -16,9 +15,22 @@ export async function getUserById(id: string) {
   try {
     const user = await prisma.user.findUnique({
       where: { id },
-      include: { userData: true },
     });
     return user;
+  } catch {
+    return null;
+  }
+}
+
+export async function getUserDataById(id: string) {
+  try {
+    const userData = prisma.userData.findFirst({
+      where: {
+        userId: id,
+      },
+    });
+
+    return userData;
   } catch {
     return null;
   }

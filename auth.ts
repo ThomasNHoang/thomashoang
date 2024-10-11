@@ -1,7 +1,6 @@
 import NextAuth from "next-auth";
 import { prisma } from "@/prisma";
 import authConfig from "@/auth.config";
-import { getUserById } from "@/lib/user";
 import { Adapter } from "next-auth/adapters";
 import { clearStaleTokens } from "@/lib/auth";
 import Google from "next-auth/providers/google";
@@ -9,6 +8,7 @@ import Github from "next-auth/providers/github";
 import { Font as FontEnum } from "@prisma/client";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import Nodemailer from "next-auth/providers/nodemailer";
+import { getUserById, getUserDataById } from "@/lib/user";
 const serverConfig = {
   host: "smtp.gmail.com",
   port: 465,
@@ -38,19 +38,22 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     strategy: "jwt",
   },
   callbacks: {
-    async signIn({ user }) {
-      const userData = await prisma.userData.findUnique({
-        where: {
-          userId: user.id,
-        },
-      });
+    async jwt({ token, trigger }) {
+      console.log(token, trigger);
+      if (!token.sub) return token;
+      clearStaleTokens();
 
-      const hasUserData = !!userData;
+      const existingUser = await getUserById(token.sub);
+      console.log(existingUser);
+
+      if (!existingUser) return token;
+
+      const hasUserData = !!(await getUserDataById(existingUser.id));
 
       if (!hasUserData) {
         await prisma.user.update({
           where: {
-            id: user.id,
+            id: existingUser.id,
           },
           data: {
             userData: {
@@ -62,21 +65,13 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         });
       }
 
-      return true;
-    },
-    async jwt({ token }) {
-      if (!token.sub) return token;
-      clearStaleTokens();
-
-      const existingUser = await getUserById(token.sub);
-
-      if (!existingUser) return token;
+      const userData = await getUserDataById(existingUser.id);
 
       token.name = existingUser.name;
       token.email = existingUser.email;
       token.role = existingUser.role;
       token.data = {
-        font: existingUser.userData?.font,
+        font: userData?.font,
       };
 
       return token;
