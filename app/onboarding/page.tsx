@@ -7,8 +7,8 @@ import { OnboardingForm } from "@/components/auth/onboardingForm";
 export default async function OnboardingPage() {
   const user = await currentUser();
   if (user?.name) {
-    // redirect(DEFAULT_LOGIN_REDIRECT);
-    // return;
+    redirect(DEFAULT_LOGIN_REDIRECT);
+    return;
   }
 
   return (
