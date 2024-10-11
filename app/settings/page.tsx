@@ -3,6 +3,8 @@ import { Separator } from "@/components/ui/separator";
 import { AccountForm } from "@/components/settings/account";
 import { linkedGithubAccount, linkedGoogleAccount } from "@/lib/actions/user/account";
 
+export const dynamic = "force-dynamic"
+
 export default async function AccountPage() {
   let googleConnected = false;
   let githubConnected = false;
