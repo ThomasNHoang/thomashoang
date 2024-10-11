@@ -29,15 +29,15 @@ export function AppearanceForm(user: appearanceSchemaType) {
   const form = useForm<appearanceSchemaType>({
     resolver: zodResolver(appearanceFormSchema),
     defaultValues: user,
-  })
+  });
 
   const watchFields = form.watch();
 
-  type FieldKey = 'font';
+  type FieldKey = "font";
 
   useEffect(() => {
     const hasChanges = (Object.keys(watchFields) as FieldKey[]).some(
-      (key) => watchFields[key] !== user[key]
+      (key) => watchFields[key] !== user[key],
     );
 
     setIsButtonEnabled(hasChanges);
@@ -56,7 +56,6 @@ export function AppearanceForm(user: appearanceSchemaType) {
         toast.success(result.success);
         router.refresh();
       }
-
     } catch (error) {
       console.log(error);
       toast.error("Something went wrong!");
@@ -77,7 +76,7 @@ export function AppearanceForm(user: appearanceSchemaType) {
                   <select
                     className={cn(
                       buttonVariants({ variant: "outline" }),
-                      "w-[200px] appearance-none font-normal"
+                      "w-[200px] appearance-none font-normal",
                     )}
                     {...field}
                   >
@@ -95,8 +94,10 @@ export function AppearanceForm(user: appearanceSchemaType) {
           )}
         />
 
-        <Button type="submit" disabled={!isButtonEnabled}>Update preferences</Button>
+        <Button type="submit" disabled={!isButtonEnabled}>
+          Update preferences
+        </Button>
       </form>
     </Form>
-  )
+  );
 }

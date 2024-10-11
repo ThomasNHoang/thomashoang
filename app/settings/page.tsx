@@ -1,9 +1,12 @@
 import { currentUser } from "@/lib/auth";
 import { Separator } from "@/components/ui/separator";
 import { AccountForm } from "@/components/settings/account";
-import { linkedGithubAccount, linkedGoogleAccount } from "@/lib/actions/user/account";
+import {
+  linkedGithubAccount,
+  linkedGoogleAccount,
+} from "@/lib/actions/user/account";
 
-export const dynamic = "force-dynamic"
+export const dynamic = "force-dynamic";
 
 export default async function AccountPage() {
   let googleConnected = false;
@@ -12,15 +15,14 @@ export default async function AccountPage() {
   try {
     googleConnected = await linkedGoogleAccount();
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
 
   try {
     githubConnected = await linkedGithubAccount();
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
-
 
   const user = await currentUser();
   return (
@@ -38,5 +40,5 @@ export default async function AccountPage() {
         githubConnected={githubConnected}
       />
     </div>
-  )
+  );
 }

@@ -15,5 +15,5 @@ export function BackButton({ text, className }: BackButtonProps) {
     <Button variant="link" className={className} onClick={() => router.back()}>
       {text || "Go Back"}
     </Button>
-  )
+  );
 }

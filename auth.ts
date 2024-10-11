@@ -2,7 +2,7 @@ import NextAuth from "next-auth";
 import { prisma } from "@/prisma";
 import authConfig from "@/auth.config";
 import { getUserById } from "@/lib/user";
-import { Adapter } from 'next-auth/adapters';
+import { Adapter } from "next-auth/adapters";
 import { clearStaleTokens } from "@/lib/auth";
 import Google from "next-auth/providers/google";
 import Github from "next-auth/providers/github";
@@ -15,51 +15,51 @@ const serverConfig = {
   secure: true,
   auth: {
     user: process.env.SMTP_EMAIL,
-    pass: process.env.SMTP_EMAIL_PASS
-  }
-}
+    pass: process.env.SMTP_EMAIL_PASS,
+  },
+};
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   ...authConfig,
   providers: [
     Google({
-      allowDangerousEmailAccountLinking: true // Only wwith magic link so safe
+      allowDangerousEmailAccountLinking: true, // Only wwith magic link so safe
     }),
     Github({
-      allowDangerousEmailAccountLinking: true
+      allowDangerousEmailAccountLinking: true,
     }),
     Nodemailer({
       server: serverConfig,
-      from: `Email Service <${process.env.SMTP_EMAIL}>`
-    })
+      from: `Email Service <${process.env.SMTP_EMAIL}>`,
+    }),
   ],
   adapter: PrismaAdapter(prisma) as Adapter,
   session: {
-    strategy: "jwt"
+    strategy: "jwt",
   },
   callbacks: {
     async signIn({ user }) {
       const userData = await prisma.userData.findUnique({
         where: {
-          userId: user.id
-        }
-      })
+          userId: user.id,
+        },
+      });
 
       const hasUserData = !!userData;
 
       if (!hasUserData) {
         await prisma.user.update({
           where: {
-            id: user.id
+            id: user.id,
           },
           data: {
             userData: {
               create: {
-                font: FontEnum.INTER
-              }
-            }
-          }
-        })
+                font: FontEnum.INTER,
+              },
+            },
+          },
+        });
       }
 
       return true;
@@ -76,9 +76,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       token.email = existingUser.email;
       token.role = existingUser.role;
       token.data = {
-        font: existingUser.userData?.font
-      }
-
+        font: existingUser.userData?.font,
+      };
 
       return token;
     },
@@ -101,6 +100,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       }
 
       return session;
-    }
-  }
-})
+    },
+  },
+});

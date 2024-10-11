@@ -1,8 +1,4 @@
-import {
-  Avatar,
-  AvatarImage,
-  AvatarFallback
-} from "@/components/ui/avatar";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -20,15 +16,15 @@ export async function UserButton() {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Avatar className="h-7 w-7 outline outline-2 outline-offset-2 cursor-pointer">
-          <AvatarImage className="outline outline-1" src={user?.image || ""}/>
+          <AvatarImage className="outline outline-1" src={user?.image || ""} />
           <AvatarFallback className="bg-slate-200">
             <FaUser />
           </AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-44" sideOffset={12}> 
+      <DropdownMenuContent align="end" className="w-44" sideOffset={12}>
         {user ? <SignedInContent user={user} /> : <SignedOutContent />}
       </DropdownMenuContent>
     </DropdownMenu>
-  )
+  );
 }

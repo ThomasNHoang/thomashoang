@@ -14,9 +14,9 @@ export default async function AppearancePage() {
         </p>
       </div>
       <Separator />
-      <AppearanceForm 
-        font={user?.data.font?.toLowerCase() as "inter" | "geist" || "inter"}
+      <AppearanceForm
+        font={(user?.data.font?.toLowerCase() as "inter" | "geist") || "inter"}
       />
     </div>
-  )
+  );
 }

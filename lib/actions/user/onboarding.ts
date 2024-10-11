@@ -7,8 +7,10 @@ import { redirect } from "next/navigation";
 import { onboardingFormSchema, onboardingSchemaType } from "@/schema";
 import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 
-
-export async function onboardingAction(values: onboardingSchemaType, callbackUrl?: string) {
+export async function onboardingAction(
+  values: onboardingSchemaType,
+  callbackUrl?: string,
+) {
   const validatedFields = onboardingFormSchema.safeParse(values);
 
   if (!validatedFields.success) {
@@ -28,13 +30,13 @@ export async function onboardingAction(values: onboardingSchemaType, callbackUrl
 
   await prisma.user.update({
     where: {
-      id: existingUser.id
+      id: existingUser.id,
     },
     data: {
-      ...values
-    }
-  })
+      ...values,
+    },
+  });
 
   redirect(callbackUrl || DEFAULT_LOGIN_REDIRECT);
-  return { success: "Account updated" }
+  return { success: "Account updated" };
 }

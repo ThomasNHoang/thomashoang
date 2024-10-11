@@ -5,7 +5,10 @@ import { getUserByEmail } from "@/lib/user";
 import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 import { loginFormSchema, loginSchemaType } from "@/schema";
 
-export async function emailLogin(values: loginSchemaType, callbackUrl?: string) {
+export async function emailLogin(
+  values: loginSchemaType,
+  callbackUrl?: string,
+) {
   const validatedFields = loginFormSchema.safeParse(values);
 
   if (!validatedFields.success) {
@@ -21,12 +24,10 @@ export async function emailLogin(values: loginSchemaType, callbackUrl?: string) 
   }
 
   try {
-    await signIn(
-      "nodemailer", {
-        email,
-        redirectTo: callbackUrl || DEFAULT_LOGIN_REDIRECT
-      }
-    )
+    await signIn("nodemailer", {
+      email,
+      redirectTo: callbackUrl || DEFAULT_LOGIN_REDIRECT,
+    });
   } catch (error) {
     throw error;
   }

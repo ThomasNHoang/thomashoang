@@ -23,8 +23,8 @@ async function checkLinkedAccount(provider: string) {
     const result = await prisma.account.findFirstOrThrow({
       where: {
         provider,
-        userId
-      }
+        userId,
+      },
     });
     return !!result;
   } catch {
@@ -43,8 +43,8 @@ async function unlinkAccount(provider: string) {
     const result = await prisma.account.deleteMany({
       where: {
         provider,
-        userId
-      }
+        userId,
+      },
     });
     return !!result;
   } catch {

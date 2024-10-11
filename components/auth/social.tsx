@@ -9,18 +9,30 @@ interface SocialProps {
 export function Social({ isSubmitting }: SocialProps) {
   async function onClick(provider: "google" | "github") {
     signIn(provider, {
-      redirectTo: "/"
+      redirectTo: "/",
     });
-  };
+  }
 
   return (
     <div className="space-y-6">
       <div className="flex flex-row space-x-2">
-        <Button className="w-full" variant="outline" type="button" disabled={isSubmitting} onClick={() => onClick("google")}>
+        <Button
+          className="w-full"
+          variant="outline"
+          type="button"
+          disabled={isSubmitting}
+          onClick={() => onClick("google")}
+        >
           <FaGoogle className="mr-2 h-4 w-4" />
           Google
         </Button>
-        <Button className="w-full" variant="outline" type="button" disabled={isSubmitting} onClick={() => onClick("github")}>
+        <Button
+          className="w-full"
+          variant="outline"
+          type="button"
+          disabled={isSubmitting}
+          onClick={() => onClick("github")}
+        >
           <FaGithub className="mr-2 h-4 w-4" />
           Github
         </Button>
@@ -36,5 +48,5 @@ export function Social({ isSubmitting }: SocialProps) {
         </div>
       </div>
     </div>
-  )
+  );
 }

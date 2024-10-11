@@ -7,8 +7,7 @@ import {
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
 import { signOut } from "next-auth/react";
-export function SignedInContent({user} : {user: User}) {
-
+export function SignedInContent({ user }: { user: User }) {
   return (
     <>
       <DropdownMenuItem className="h-14 focus:bg-background" asChild>
@@ -24,9 +23,12 @@ export function SignedInContent({user} : {user: User}) {
           Settings
         </Link>
       </DropdownMenuItem>
-      <DropdownMenuItem className="focus:bg-destructive/25 focus:text-destructive cursor-pointer" onClick={async () => await signOut()}>
+      <DropdownMenuItem
+        className="focus:bg-destructive/25 focus:text-destructive cursor-pointer"
+        onClick={async () => await signOut()}
+      >
         Log out
       </DropdownMenuItem>
     </>
-  )
+  );
 }

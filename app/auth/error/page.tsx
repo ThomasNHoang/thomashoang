@@ -3,7 +3,7 @@ import { AuthState, AuthStateProps } from "@/components/auth/authState";
 interface ErrorPageProps {
   searchParams: {
     error?: string;
-  }
+  };
 }
 
 export default function ErrorPage({ searchParams: { error } }: ErrorPageProps) {
@@ -12,12 +12,13 @@ export default function ErrorPage({ searchParams: { error } }: ErrorPageProps) {
     description: "Oops, something went wrong!",
     linkHref: "/auth/login",
     linkLabel: "Login again",
-    state: "error"
-  }
+    state: "error",
+  };
 
   switch (error) {
     case "Verification": {
-      authProps.description = "Invalid link. It may have been used already or expired."
+      authProps.description =
+        "Invalid link. It may have been used already or expired.";
       break;
     }
     default: {
@@ -25,9 +26,5 @@ export default function ErrorPage({ searchParams: { error } }: ErrorPageProps) {
     }
   }
 
-  return (
-    <AuthState
-      {...authProps}
-    />
-  );
+  return <AuthState {...authProps} />;
 }

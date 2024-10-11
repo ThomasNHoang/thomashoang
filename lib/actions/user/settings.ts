@@ -6,7 +6,6 @@ import { getUserById } from "@/lib/user";
 import { Font as FontEnum } from "@prisma/client";
 import { accountSchemaType, appearanceSchemaType } from "@/schema";
 
-
 export async function accountAction(values: accountSchemaType) {
   const user = await currentUser();
 
@@ -24,14 +23,14 @@ export async function accountAction(values: accountSchemaType) {
 
   await prisma.user.update({
     where: {
-      id: existingUser.id
+      id: existingUser.id,
     },
     data: {
-      ...values
-    }
-  })
+      ...values,
+    },
+  });
 
-  return { success: "Account updated" }
+  return { success: "Account updated" };
 }
 
 export async function appearanceAction(values: appearanceSchemaType) {
@@ -40,7 +39,7 @@ export async function appearanceAction(values: appearanceSchemaType) {
   if (!user) {
     return { error: "Unauthorized!" };
   }
-  
+
   const existingUser = await getUserById(user.id as string);
 
   if (!existingUser) {
@@ -49,12 +48,12 @@ export async function appearanceAction(values: appearanceSchemaType) {
 
   await prisma.userData.update({
     where: {
-      userId: existingUser.id
+      userId: existingUser.id,
     },
     data: {
-      font: values.font.toUpperCase() as FontEnum
-    }
-  })
+      font: values.font.toUpperCase() as FontEnum,
+    },
+  });
 
-  return { success: "Account updated" }
+  return { success: "Account updated" };
 }

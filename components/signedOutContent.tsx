@@ -6,7 +6,6 @@ import {
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
 export function SignedOutContent() {
-
   return (
     <>
       <DropdownMenuItem className="h-14 focus:bg-background" asChild>
@@ -17,11 +16,12 @@ export function SignedOutContent() {
         </p>
       </DropdownMenuItem>
       <DropdownMenuSeparator />
-      <DropdownMenuItem className="focus:bg-success/25 focus:text-success cursor-pointer" asChild>
-        <Link href="/auth/login">
-          Login
-        </Link>
+      <DropdownMenuItem
+        className="focus:bg-success/25 focus:text-success cursor-pointer"
+        asChild
+      >
+        <Link href="/auth/login">Login</Link>
       </DropdownMenuItem>
     </>
-  )
+  );
 }

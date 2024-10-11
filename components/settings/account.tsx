@@ -20,7 +20,10 @@ import { signIn, useSession } from "next-auth/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { accountAction } from "@/lib/actions/user/settings";
 import { accountFormSchema, accountSchemaType } from "@/schema";
-import { unlinkGithubAccount, unlinkGoogleAccount } from "@/lib/actions/user/account";
+import {
+  unlinkGithubAccount,
+  unlinkGoogleAccount,
+} from "@/lib/actions/user/account";
 
 export function AccountForm(user: accountSchemaType) {
   const router = useRouter();
@@ -30,15 +33,15 @@ export function AccountForm(user: accountSchemaType) {
   const form = useForm<accountSchemaType>({
     resolver: zodResolver(accountFormSchema),
     defaultValues: user,
-  })
+  });
 
   const watchFields = form.watch();
 
-  type FieldKey = 'name' | 'googleConnected' | 'githubConnected';
+  type FieldKey = "name" | "googleConnected" | "githubConnected";
 
   useEffect(() => {
     const hasChanges = (Object.keys(watchFields) as FieldKey[]).some(
-      (key) => watchFields[key] !== user[key]
+      (key) => watchFields[key] !== user[key],
     );
 
     setIsButtonEnabled(hasChanges);
@@ -56,42 +59,44 @@ export function AccountForm(user: accountSchemaType) {
         update();
         toast.success(result.success);
       }
-
     } catch (error) {
       console.log(error);
       toast.error("Something went wrong!");
     }
 
     if (data.googleConnected !== user.googleConnected) {
-      if (data.googleConnected) { // Wants to connect google
+      if (data.googleConnected) {
+        // Wants to connect google
         try {
           await signIn("google", {
-            redirect: false
+            redirect: false,
           });
         } catch (error) {
           console.log(error);
         }
-      } else { // Wants to disconnect google
+      } else {
+        // Wants to disconnect google
         await unlinkGoogleAccount();
       }
     }
 
     if (data.githubConnected !== user.githubConnected) {
-      if (data.githubConnected) { // Wants to connect github
+      if (data.githubConnected) {
+        // Wants to connect github
         try {
           await signIn("github", {
-            redirect: false
+            redirect: false,
           });
         } catch (error) {
           console.log(error);
         }
-      } else { // Wants to disconnect github
+      } else {
+        // Wants to disconnect github
         await unlinkGithubAccount();
       }
 
       router.refresh();
     }
-
   }
 
   return (
@@ -120,9 +125,7 @@ export function AccountForm(user: accountSchemaType) {
             <FormItem className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm">
               <div className="space-y-0.5">
                 <FormLabel>Link Google</FormLabel>
-                <FormDescription>
-                  Allow login with google
-                </FormDescription>
+                <FormDescription>Allow login with google</FormDescription>
               </div>
               <FormControl>
                 <Switch
@@ -141,9 +144,7 @@ export function AccountForm(user: accountSchemaType) {
             <FormItem className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm">
               <div className="space-y-0.5">
                 <FormLabel>Link Github</FormLabel>
-                <FormDescription>
-                  Allow login with github
-                </FormDescription>
+                <FormDescription>Allow login with github</FormDescription>
               </div>
               <FormControl>
                 <Switch
@@ -155,8 +156,10 @@ export function AccountForm(user: accountSchemaType) {
             </FormItem>
           )}
         />
-        <Button type="submit" disabled={!isButtonEnabled}>Update account</Button>
+        <Button type="submit" disabled={!isButtonEnabled}>
+          Update account
+        </Button>
       </form>
     </Form>
-  )
+  );
 }

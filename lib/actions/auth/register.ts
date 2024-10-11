@@ -14,12 +14,10 @@ export async function emailRegister(values: loginSchemaType) {
   const { email } = validatedFields.data;
 
   try {
-    await signIn(
-      "nodemailer", {
-        email,
-        redirectTo: DEFAULT_LOGIN_REDIRECT
-      }
-    )
+    await signIn("nodemailer", {
+      email,
+      redirectTo: DEFAULT_LOGIN_REDIRECT,
+    });
   } catch (error) {
     throw error;
   }

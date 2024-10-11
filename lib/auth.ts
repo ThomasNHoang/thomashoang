@@ -12,13 +12,13 @@ export async function clearStaleTokens() {
     await prisma.verificationToken.deleteMany({
       where: {
         expires: {
-          lt: new Date()
-        }
-      }
-    })
+          lt: new Date(),
+        },
+      },
+    });
     // console.log(`${result.count} expired tokens deleted.`)
   } catch (error) {
-    console.error("Error deleting expired tokens:", error)
+    console.error("Error deleting expired tokens:", error);
   }
 }
 

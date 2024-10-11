@@ -28,8 +28,10 @@ export async function RoleGate({
     }
     return (
       <div className="text-destructive rounded-md flex flex-col flex-1 justify-center items-center gap-x-2 text-3xl">
-        <HiOutlineExclamationTriangle className="h-12 w-12 mx-auto"/>
-        <p className="my-5 text-center">{message || "You do not have permission to view this content"}</p>
+        <HiOutlineExclamationTriangle className="h-12 w-12 mx-auto" />
+        <p className="my-5 text-center">
+          {message || "You do not have permission to view this content"}
+        </p>
         <BackButton className="text-xl" />
       </div>
     );

@@ -27,7 +27,7 @@ export function OnboardingForm() {
     defaultValues: {
       name: undefined,
     },
-  })
+  });
 
   async function onSubmit(values: onboardingSchemaType) {
     try {
@@ -36,10 +36,9 @@ export function OnboardingForm() {
       if (result?.error) {
         toast.error(result.error);
       }
-
     } catch (error) {
-      console.log(error)
-      toast.error("Something went wrong!")
+      console.log(error);
+      toast.error("Something went wrong!");
     }
   }
 
@@ -62,8 +61,10 @@ export function OnboardingForm() {
             </FormItem>
           )}
         />
-        <Button type="submit" className="w-full">Submit</Button>
+        <Button type="submit" className="w-full">
+          Submit
+        </Button>
       </form>
     </Form>
-  )
+  );
 }

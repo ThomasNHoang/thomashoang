@@ -27,7 +27,7 @@ export function LoginForm() {
     defaultValues: {
       email: "",
     },
-  })
+  });
 
   const isSubmitting = form.formState.isSubmitting;
 
@@ -37,10 +37,9 @@ export function LoginForm() {
       if (result?.error) {
         toast.error(result.error);
       }
-
     } catch (error) {
-      console.log(error)
-      toast.error("Something went wrong!")
+      console.log(error);
+      toast.error("Something went wrong!");
     }
   }
 
@@ -54,7 +53,9 @@ export function LoginForm() {
             name="email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel><span className="text-semibold">Email</span></FormLabel>
+                <FormLabel>
+                  <span className="text-semibold">Email</span>
+                </FormLabel>
                 <FormControl>
                   <Input disabled={isSubmitting} placeholder="" {...field} />
                 </FormControl>
@@ -62,15 +63,11 @@ export function LoginForm() {
               </FormItem>
             )}
           />
-          <Button
-            type="submit"
-            className="w-full"
-            disabled={isSubmitting}
-          >
+          <Button type="submit" className="w-full" disabled={isSubmitting}>
             {isSubmitting ? "Logging In" : "Login with Email"}
           </Button>
         </form>
       </Form>
     </div>
-  )
+  );
 }

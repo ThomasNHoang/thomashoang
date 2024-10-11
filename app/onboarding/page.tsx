@@ -7,9 +7,9 @@ import { OnboardingForm } from "@/components/auth/onboardingForm";
 export default async function OnboardingPage() {
   const user = await currentUser();
   if (user?.name) {
-    redirect(DEFAULT_LOGIN_REDIRECT)
+    redirect(DEFAULT_LOGIN_REDIRECT);
     return;
-  } 
+  }
 
   return (
     <div className="flex flex-col flex-1 items-center justify-center">
@@ -20,11 +20,16 @@ export default async function OnboardingPage() {
         <OnboardingForm />
       </div>
       <div className="mt-4 text-center">
-        <p className="text-md">Don&apos;t want to do this now? You can complete it later in settings.</p>
-        <Link href={DEFAULT_LOGIN_REDIRECT} className="hover:underline text-blue-500 hover:text-blue-600">
+        <p className="text-md">
+          Don&apos;t want to do this now? You can complete it later in settings.
+        </p>
+        <Link
+          href={DEFAULT_LOGIN_REDIRECT}
+          className="hover:underline text-blue-500 hover:text-blue-600"
+        >
           Go to dashboard
         </Link>
       </div>
     </div>
-  )
+  );
 }
