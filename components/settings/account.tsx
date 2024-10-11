@@ -34,11 +34,12 @@ export function AccountForm(user: accountSchemaType) {
 
   const watchFields = form.watch();
 
+  type FieldKey = 'name' | 'googleConnected' | 'githubConnected';
+
   useEffect(() => {
-    const hasChanges =
-      watchFields.name !== user.name ||
-      watchFields.googleConnected !== user.googleConnected ||
-      watchFields.githubConnected !== user.githubConnected;
+    const hasChanges = (Object.keys(watchFields) as FieldKey[]).some(
+      (key) => watchFields[key] !== user[key]
+    );
 
     setIsButtonEnabled(hasChanges);
   }, [watchFields, user]);

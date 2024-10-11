@@ -33,9 +33,12 @@ export function AppearanceForm(user: appearanceSchemaType) {
 
   const watchFields = form.watch();
 
+  type FieldKey = 'font';
+
   useEffect(() => {
-    const hasChanges =
-      watchFields.font !== user.font
+    const hasChanges = (Object.keys(watchFields) as FieldKey[]).some(
+      (key) => watchFields[key] !== user[key]
+    );
 
     setIsButtonEnabled(hasChanges);
   }, [watchFields]);
