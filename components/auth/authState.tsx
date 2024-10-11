@@ -40,11 +40,11 @@ export function AuthState({
           {header}
         </div>
         <p className="py-3 text-lg text-center">{description}</p>
-        <p className="text-center text-sm text-gray-500">
-          {linkQuestion ? linkQuestion : ""}{" "}
+        <p className="text-center text-sm">
+          <span className="text-muted-foreground">{linkQuestion ? linkQuestion : ""}</span>{" "}
           <Link
             href={linkHref}
-            className="font-semibold leading-6 text-blue-600 hover:text-blue-500"
+            className="font-semibold hover:underline underline-offset-4"
           >
             {linkLabel}
           </Link>

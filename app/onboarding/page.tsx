@@ -7,8 +7,8 @@ import { OnboardingForm } from "@/components/auth/onboardingForm";
 export default async function OnboardingPage() {
   const user = await currentUser();
   if (user?.name) {
-    redirect(DEFAULT_LOGIN_REDIRECT);
-    return;
+    // redirect(DEFAULT_LOGIN_REDIRECT);
+    // return;
   }
 
   return (
@@ -20,12 +20,12 @@ export default async function OnboardingPage() {
         <OnboardingForm />
       </div>
       <div className="mt-4 text-center">
-        <p className="text-md">
+        <p className="text-md text-muted-foreground">
           Don&apos;t want to do this now? You can complete it later in settings.
         </p>
         <Link
           href={DEFAULT_LOGIN_REDIRECT}
-          className="hover:underline text-blue-500 hover:text-blue-600"
+          className="hover:underline underline-offset-4"
         >
           Go to dashboard
         </Link>
