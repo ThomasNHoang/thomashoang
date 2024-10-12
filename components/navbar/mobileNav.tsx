@@ -2,6 +2,7 @@
 
 import { cn } from "@/lib/utils";
 import { useState } from "react";
+import { navbarRoutes } from "@/routes";
 import Link, { LinkProps } from "next/link";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
@@ -45,18 +46,13 @@ export function MobileNavigation() {
         <ScrollArea className="my-4 h-[calc(100vh-8rem)] pb-10 pl-6">
           {/* Todo: Add Navlinks Dynamically */}
           <div className="flex flex-col space-y-3">
-            <MobileLink href="/" onOpenChange={setOpen}>
-              Placeholder
-            </MobileLink>
-            <MobileLink href="/" onOpenChange={setOpen}>
-              Placeholder
-            </MobileLink>
-            <MobileLink href="/" onOpenChange={setOpen}>
-              Placeholder
-            </MobileLink>
-            <MobileLink href="/" onOpenChange={setOpen}>
-              Placeholder
-            </MobileLink>
+            {
+              navbarRoutes.map((item, index) => (
+                <MobileLink key={index} href={item.href} onOpenChange={setOpen}>
+                  {item.title}
+                </MobileLink>
+              ))
+            }
           </div>
         </ScrollArea>
       </SheetContent>
