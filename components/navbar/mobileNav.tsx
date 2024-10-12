@@ -7,13 +7,24 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Root as VisuallyHidden } from "@radix-ui/react-visually-hidden";
+import { Sheet, SheetContent, SheetDescription, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 
 export function MobileNavigation() {
   const [open, setOpen] = useState(false);
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
+      <VisuallyHidden>
+        <SheetTitle>
+          Mobile navigation menu
+        </SheetTitle>
+      </VisuallyHidden>
+      <VisuallyHidden>
+        <SheetDescription>
+          Mobile navigation menu links
+        </SheetDescription>
+      </VisuallyHidden>
       <SheetTrigger asChild>
         <Button
           variant="ghost"
