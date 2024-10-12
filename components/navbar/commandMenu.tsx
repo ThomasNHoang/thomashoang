@@ -78,9 +78,9 @@ export function CommandMenu(props: DialogProps) {
           <CommandGroup heading="Links">
             {/* Todo: Dynamically render */}
             {
-              commandMenuRoutes.map((item) => (
+              commandMenuRoutes.map((item, index) => (
                 <CommandItem
-                  key={item.href}
+                  key={index}
                   value={item.title}
                   onSelect={() => {
                     runCommand(() => router.push(item.href))
