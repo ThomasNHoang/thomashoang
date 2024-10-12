@@ -1,4 +1,3 @@
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -6,8 +5,9 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { FaUser } from "react-icons/fa";
 import { currentUser } from "@/lib/auth";
-import { SignedInContent } from "@/components/signedInContent";
-import { SignedOutContent } from "@/components/signedOutContent";
+import { SignedInContent } from "@/components/navbar/user/signedInContent";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { SignedOutContent } from "@/components/navbar/user/signedOutContent";
 
 export async function UserButton() {
   const user = await currentUser();

@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { Toaster } from "@/components/ui/sonner";
 import { SessionProvider } from "next-auth/react";
-import { NavigationHeader } from "@/components/navHeader";
+import { NavigationHeader } from "@/components/navbar";
 import { ThemeProvider } from "@/components/themeProvider";
 
 const geistSans = localFont({

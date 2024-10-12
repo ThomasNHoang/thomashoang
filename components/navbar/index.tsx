@@ -1,12 +1,12 @@
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { VscGithubInverted } from "react-icons/vsc";
-import { UserButton } from "@/components/userButton";
-import { MainNavigation } from "@/components/mainNav";
-import { CommandMenu } from "@/components/commandMenu";
 import { buttonVariants } from "@/components/ui/button";
-import { MobileNavigation } from "@/components/mobileNav";
-import { ThemeSwitcher } from "@/components/themeSwitcher";
+import { MainNavigation } from "@/components/navbar/mainNav";
+import { CommandMenu } from "@/components/navbar/commandMenu";
+import { UserButton } from "@/components/navbar/user/userButton";
+import { MobileNavigation } from "@/components/navbar/mobileNav";
+import { ThemeSwitcher } from "@/components/navbar/themeSwitcher";
 
 export function NavigationHeader() {
   return (
