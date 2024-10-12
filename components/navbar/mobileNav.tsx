@@ -44,7 +44,6 @@ export function MobileNavigation() {
           <span className="font-bold">Thomas Hoang</span>
         </MobileLink>
         <ScrollArea className="my-4 h-[calc(100vh-8rem)] pb-10 pl-6">
-          {/* Todo: Add Navlinks Dynamically */}
           <div className="flex flex-col space-y-3">
             {
               navbarRoutes.map((item, index) => (

@@ -76,7 +76,6 @@ export function CommandMenu(props: DialogProps) {
         <CommandList>
           <CommandEmpty>No results found.</CommandEmpty>
           <CommandGroup heading="Links">
-            {/* Todo: Dynamically render */}
             {
               commandMenuRoutes.map((item, index) => (
                 <CommandItem
