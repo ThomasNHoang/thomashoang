@@ -28,3 +28,34 @@ export const apiAuthPrefix = "/api/auth";
  * @type {string}
  */
 export const DEFAULT_LOGIN_REDIRECT = "/dashboard";
+
+
+/**
+ * An dictionary of routes for navbar
+ * @type {Array<{title: string, href: string, matcher: function(string): boolean}>}
+ */
+export const navbarRoutes = [
+  {
+    title: "Dashboard",
+    href: "/dashboard",
+    matcher: (path: string) => {
+      return path === "/dashboard"
+    }
+  }
+];
+
+/**
+ * An dictionary of routes for navbar
+ * @type {Array<{title: string, href: string, matcher?: function(string): boolean}>}
+ */
+export const commandMenuRoutes = [
+  ...navbarRoutes,
+  {
+    title: "Account Settings",
+    href: "/settings"
+  },
+  {
+    title: "Appearance Settings",
+    href: "/settings/appearance"
+  }
+]

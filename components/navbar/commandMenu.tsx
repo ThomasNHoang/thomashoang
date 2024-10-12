@@ -18,6 +18,7 @@ import {
 import { cn } from "@/lib/utils";
 import { useTheme } from "next-themes";
 import { useRouter } from "next/navigation";
+import { commandMenuRoutes } from "@/routes";
 import { Button } from "@/components/ui/button";
 import { DialogProps } from "@radix-ui/react-dialog";
 import { useEffect, useState, useCallback } from "react";
@@ -75,43 +76,20 @@ export function CommandMenu(props: DialogProps) {
         <CommandList>
           <CommandEmpty>No results found.</CommandEmpty>
           <CommandGroup heading="Links">
-            {/* Todo: Dynamically render */}
-            <CommandItem
-              value="Placeholder"
-              onSelect={() => {
-                runCommand(() => router.push("/"));
-              }}
-            >
-              <RxFile className="mr-2 h-4 w-4" />
-              Placeholder
-            </CommandItem>
-            <CommandItem
-              value="Placeholder"
-              onSelect={() => {
-                runCommand(() => router.push("/"));
-              }}
-            >
-              <RxFile className="mr-2 h-4 w-4" />
-              Placeholder
-            </CommandItem>
-            <CommandItem
-              value="Placeholder"
-              onSelect={() => {
-                runCommand(() => router.push("/"));
-              }}
-            >
-              <RxFile className="mr-2 h-4 w-4" />
-              Placeholder
-            </CommandItem>
-            <CommandItem
-              value="Placeholder"
-              onSelect={() => {
-                runCommand(() => router.push("/"));
-              }}
-            >
-              <RxFile className="mr-2 h-4 w-4" />
-              Placeholder
-            </CommandItem>
+            {
+              commandMenuRoutes.map((item, index) => (
+                <CommandItem
+                  key={index}
+                  value={item.title}
+                  onSelect={() => {
+                    runCommand(() => router.push(item.href))
+                  }}
+                >
+                  <RxFile className="mr-2 h-4 w-4" />
+                  {item.title}
+                </CommandItem>
+              ))
+            }
           </CommandGroup>
           <CommandGroup heading="Theme">
             <CommandItem onSelect={() => runCommand(() => setTheme("light"))}>

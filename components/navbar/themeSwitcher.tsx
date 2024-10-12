@@ -7,8 +7,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useTheme } from "next-themes";
-import { Button } from "@/components/ui/button";
 import { RxSun, RxMoon } from "react-icons/rx";
+import { Button } from "@/components/ui/button";
 
 export function ThemeSwitcher() {
   const { setTheme } = useTheme();
