@@ -6,7 +6,7 @@ export type Note = {
   lastModified: Date;
 };
 
-export const notes: Note[] = [
+export let notes: Note[] = [
   {
     id: "0f27aee1-d7da-4f52-8a10-38bf234bb3a5",
     title: "Hello",
