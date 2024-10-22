@@ -4,7 +4,7 @@ import {
   CardTitle,
   CardHeader,
   CardFooter,
-  CardContent,
+  // CardContent,
   CardDescription,
 } from "@/components/ui/card";
 import { Note } from "@prisma/client";

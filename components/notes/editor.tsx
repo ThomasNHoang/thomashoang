@@ -28,18 +28,18 @@ export default function Editor({
   const { complete } = useCompletion({
     id: "TH Projects",
     api: "/api/notes/generate",
-    onResponse(response) {
+    onResponse(response: Response) {
       if (response.status === 429 || response.status === 401) {
         return;
       }
       if (response.body) {
         const reader = response.body.getReader();
-        let decoder = new TextDecoder();
+        const decoder = new TextDecoder();
         reader.read().then(function processText({ done, value }) {
           if (done) {
             return;
           }
-          let chunk = decoder.decode(value, { stream: true });
+          const chunk = decoder.decode(value, { stream: true });
           editor?._tiptapEditor.commands.insertContent(chunk);
           reader.read().then(processText);
         });
@@ -67,15 +67,12 @@ export default function Editor({
   );
 
   useEffect(() => {
-    theme && setThemeState((theme === "system" ? systemTheme : theme) as themeType)
-  }, [theme])
-
-  const getCustomSlashMenuItems = (
-    editor: BlockNoteEditor
-  ): DefaultReactSuggestionItem[] => [
-      insertAiItem(editor, complete),
-      ...getDefaultReactSlashMenuItems(editor),
-    ];
+    if (theme) {
+      setThemeState(
+        (theme === "system" ? systemTheme : theme) as themeType
+      )
+    }
+  }, [theme, systemTheme])
 
   return (
     <BlockNoteView
@@ -91,7 +88,7 @@ export default function Editor({
       <SuggestionMenuController
         triggerCharacter={'/'}
         getItems={async (query) =>
-          filterSuggestionItems(getCustomSlashMenuItems(editor), query)
+          filterSuggestionItems([insertAiItem(editor, complete), ...getDefaultReactSlashMenuItems(editor)], query)
         }
       />
     </BlockNoteView>

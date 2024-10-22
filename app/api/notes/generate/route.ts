@@ -37,7 +37,7 @@ export async function POST(req: Request): Promise<Response> {
       });
     }
   }
-  let { prompt } = await req.json();
+  const { prompt } = await req.json();
   const result = await streamText({
     model: google("gemini-1.5-flash"),
     system: 'You are an AI writing assistant that continues existing text based on context from prior text. ' +

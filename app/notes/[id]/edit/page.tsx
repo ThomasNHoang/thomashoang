@@ -5,7 +5,7 @@ const Editor = dynamic(() => import("@/components/notes/editor"), { ssr: false }
 
 export default async function NotesPage({ params }: { params: { id: string } }) {
   const result = await getNote(params.id);
-  if (!result) return <>"Not Found"</>
+  if (!result) return <>Not Found</>
   if ('error' in result) {
     return <>{result.error}</>; // Handle error case
   }
