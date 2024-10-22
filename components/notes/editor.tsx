@@ -3,151 +3,54 @@
 import "@blocknote/shadcn/style.css";
 import { useTheme } from "next-themes";
 import "@blocknote/core/fonts/inter.css";
+import { useCompletion } from "ai/react";
 import { useEffect, useState } from "react";
 import { BlockNoteView } from "@blocknote/shadcn";
-import { PartialBlock } from "@blocknote/core";
-import { useCreateBlockNote } from "@blocknote/react";
+import { insertAiItem } from "@/components/notes/ai";
+import { updateNote } from "@/lib/actions/notes/update";
+import { BlockNoteEditor, filterSuggestionItems, PartialBlock } from "@blocknote/core";
+import { DefaultReactSuggestionItem, getDefaultReactSlashMenuItems, SuggestionMenuController, useCreateBlockNote } from "@blocknote/react";
 
 interface EditorProps {
-  onChange?: (value: string) => void;
+  id: string;
   initialContent?: string;
   editable?: boolean;
 }
-
-const defaultContent = [
-  {
-    type: "paragraph",
-    content: "Welcome to this demo!",
-  },
-  {
-    type: "paragraph",
-  },
-  {
-    type: "paragraph",
-    content: [
-      {
-        type: "text",
-        text: "Blocks:",
-        styles: { bold: true },
-      },
-    ],
-  },
-  {
-    type: "paragraph",
-    content: "Paragraph",
-  },
-  {
-    type: "heading",
-    content: "Heading",
-  },
-  {
-    type: "bulletListItem",
-    content: "Bullet List Item",
-  },
-  {
-    type: "numberedListItem",
-    content: "Numbered List Item",
-  },
-  {
-    type: "checkListItem",
-    content: "Check List Item",
-  },
-  {
-    type: "table",
-    content: {
-      type: "tableContent",
-      rows: [
-        {
-          cells: ["Table Cell", "Table Cell", "Table Cell"],
-        },
-        {
-          cells: ["Table Cell", "Table Cell", "Table Cell"],
-        },
-        {
-          cells: ["Table Cell", "Table Cell", "Table Cell"],
-        },
-      ],
-    },
-  },
-  {
-    type: "file",
-  },
-  {
-    type: "image",
-    props: {
-      url: "https://interactive-examples.mdn.mozilla.net/media/cc0-images/grapefruit-slice-332-332.jpg",
-      caption:
-        "From https://interactive-examples.mdn.mozilla.net/media/cc0-images/grapefruit-slice-332-332.jpg",
-    },
-  },
-  {
-    type: "video",
-    props: {
-      url: "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.webm",
-      caption:
-        "From https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.webm",
-    },
-  },
-  {
-    type: "audio",
-    props: {
-      url: "https://interactive-examples.mdn.mozilla.net/media/cc0-audio/t-rex-roar.mp3",
-      caption:
-        "From https://interactive-examples.mdn.mozilla.net/media/cc0-audio/t-rex-roar.mp3",
-    },
-  },
-  {
-    type: "paragraph",
-  },
-  {
-    type: "paragraph",
-    content: [
-      {
-        type: "text",
-        text: "Inline Content:",
-        styles: { bold: true },
-      },
-    ],
-  },
-  {
-    type: "paragraph",
-    content: [
-      {
-        type: "text",
-        text: "Styled Text",
-        styles: {
-          bold: true,
-          italic: true,
-          textColor: "red",
-          backgroundColor: "blue",
-        },
-      },
-      {
-        type: "text",
-        text: " ",
-        styles: {},
-      },
-      {
-        type: "link",
-        content: "Link",
-        href: "https://www.blocknotejs.org",
-      },
-    ],
-  },
-  {
-    type: "paragraph",
-  },
-]
 
 type themeType = "light" | "dark";
 
 
 export default function Editor({
-  onChange,
+  id,
   initialContent,
   editable
 }: EditorProps) {
-  onChange = onChange || function(){};
+  const { complete } = useCompletion({
+    id: "TH Projects",
+    api: "/api/notes/generate",
+    onResponse(response) {
+      if (response.status === 429 || response.status === 401) {
+        return;
+      }
+      if (response.body) {
+        const reader = response.body.getReader();
+        let decoder = new TextDecoder();
+        reader.read().then(function processText({ done, value }) {
+          if (done) {
+            return;
+          }
+          let chunk = decoder.decode(value, { stream: true });
+          editor?._tiptapEditor.commands.insertContent(chunk);
+          reader.read().then(processText);
+        });
+      } else {
+        console.error('Response body is null');
+      }
+    },
+    onError: (e) => {
+      console.error(e.message);
+    },
+  })
 
   const [themeState, setThemeState] = useState<"light" | "dark" | undefined>("light");
 
@@ -158,7 +61,7 @@ export default function Editor({
       initialContent:
         initialContent
           ? JSON.parse(initialContent) as PartialBlock[]
-          : defaultContent as PartialBlock[],
+          : undefined,
 
     }
   );
@@ -167,16 +70,30 @@ export default function Editor({
     theme && setThemeState((theme === "system" ? systemTheme : theme) as themeType)
   }, [theme])
 
+  const getCustomSlashMenuItems = (
+    editor: BlockNoteEditor
+  ): DefaultReactSuggestionItem[] => [
+      insertAiItem(editor, complete),
+      ...getDefaultReactSlashMenuItems(editor),
+    ];
+
   return (
     <BlockNoteView
       editor={editor}
-      onChange={() => onChange(
-        JSON.stringify(
-          editor.document
-        )
-      )}
+      onChange={() => updateNote({
+        id,
+        document: JSON.stringify(editor.document)
+      })}
       theme={themeState}
       editable={editable}
-    />
+      slashMenu={false}
+    >
+      <SuggestionMenuController
+        triggerCharacter={'/'}
+        getItems={async (query) =>
+          filterSuggestionItems(getCustomSlashMenuItems(editor), query)
+        }
+      />
+    </BlockNoteView>
   )
 }
