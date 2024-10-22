@@ -8,8 +8,8 @@ import { useEffect, useState } from "react";
 import { BlockNoteView } from "@blocknote/shadcn";
 import { insertAiItem } from "@/components/notes/ai";
 import { updateNote } from "@/lib/actions/notes/update";
-import { BlockNoteEditor, filterSuggestionItems, PartialBlock } from "@blocknote/core";
-import { DefaultReactSuggestionItem, getDefaultReactSlashMenuItems, SuggestionMenuController, useCreateBlockNote } from "@blocknote/react";
+import { filterSuggestionItems, PartialBlock } from "@blocknote/core";
+import { getDefaultReactSlashMenuItems, SuggestionMenuController, useCreateBlockNote } from "@blocknote/react";
 
 interface EditorProps {
   id: string;
